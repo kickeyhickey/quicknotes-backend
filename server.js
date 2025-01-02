@@ -120,9 +120,6 @@ app.put("/notes/:id", async (req, res) => {
     const id = req.params.id;
     const { title, note } = req.body;
 
-    console.warn("params", req);
-    console.log("params", req);
-
     const query = "UPDATE notes SET title = $1, note = $2 WHERE id = $3";
     const result = await pool.query(query, [title, note, id]);
     res.json({ result, message: "User updated sucessfully!!!!!" });
@@ -161,34 +158,6 @@ app.post("/notes", function (request, response) {
     }
   });
 });
-
-// app.put("/notes/:id", function (request, response) {
-//   let title = request.body.note_title;
-//   let note = request.body.note_text;
-//   const id = request.params.id;
-//   let values = [title, note, id];
-
-//   pool.connect((err, db, done) => {
-//     if (err) {
-//       return console.warn(err);
-//     } else {
-//       db.query(
-//         "UPDATE notes SET title, note WHERE id = ${id}",
-//         [...values],
-//         (err, table) => {
-//           done();
-//           if (err) {
-//             return response.status(400).send(err);
-//           } else {
-//             console.log(table.rows);
-//             db.end();
-//             response.status(201).send({ message: "Data inserted!" });
-//           }
-//         }
-//       );
-//     }
-//   });
-// });
 
 app.listen(PORT, () => console.warn("Listening on port " + PORT));
 module.exports = app;
